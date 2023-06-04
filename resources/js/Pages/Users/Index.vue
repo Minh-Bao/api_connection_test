@@ -54,7 +54,7 @@
                                     </form>
                                 </td>
                                 <td class="whitespace-nowrap px- py-4  text-sm text-gray-500">
-                                    <Link :href="`/users/mail/send`"
+                                    <Link :href="`/users/${user.id}/mail/send`"
                                         class=" py-4 px-8 text-gray-800 hover:bg-yellow-500 bg-yellow-300 rounded-xl">Create
                                     </Link>
                                 </td>
@@ -88,7 +88,7 @@ function submit(id) {
         .submit('post', '/users/attachment/upload', {
             forceFormData: true,
             preserveScroll: true,
-            onSuccess: () => {
+            onSuccess: (e) => {
                 componentKey.value += 1;
             },
             onError: () => {
