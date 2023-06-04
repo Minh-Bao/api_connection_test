@@ -76,7 +76,6 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request): RedirectResponse|string
     {
-
         $request->validated();
 
         try{
@@ -113,7 +112,7 @@ class UserController extends Controller
             $response = json_decode($decryptedResponse, true);
     
             if( is_string($r) && is_array(json_decode($r, true)) && json_decode($r, true)['status'] === 'ERROR'){
-                return $this->redirectWithFlashMessage('user.index',json_decode($r, true)['message'], 'danger' );
+                return $this->redirectWithFlashMessage('users.store',json_decode($r, true)['message'], 'danger' );
             }
 
             return $this->returnResponse($response);   
@@ -132,9 +131,9 @@ class UserController extends Controller
     private function returnResponse(array $response): RedirectResponse|string
     {
         return match ($response['status']) {
-            'SUCCESS' => $this->redirectWithFlashMessage('user.index', 'The file has been sent !'),
-            'ERROR' =>  $this->redirectWithFlashMessage('user.index',  'something went wrong in the upload.', 'danger'),
-            default =>  $this->redirectWithFlashMessage('user.index',  'something went wrong ...', 'danger'),
+            'SUCCESS' => $this->redirectWithFlashMessage('users.store', 'The file has been sent !'),
+            'ERROR' =>  $this->redirectWithFlashMessage('users.store',  'something went wrong in the upload.', 'danger'),
+            default =>  $this->redirectWithFlashMessage('users.store',  'something went wrong ...', 'danger'),
         };     
 
     }
