@@ -7,6 +7,18 @@ use Inertia\Inertia;
 
 class Mailcontroller extends Controller
 {
+     /**
+     * Constructor of the class
+     *
+     * @param Ar24apiClient $client
+     * @param string $date
+     */
+    public function __construct(private Ar24apiClient $client, private string $date = '')
+    {
+        $date =  $this->date = now()->tz('Europe/Paris')->format('Y-m-d H:i:s');
+    }
+
+    
     /**
      * Display a listing of the resource.
      */
