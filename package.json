@@ -19,7 +19,6 @@
         "vue": "^3.2.31"
     },
     "dependencies": {
-        "@heroicons/vue": "^2.0.18",
-        "uuid": "^9.0.0"
+        "@heroicons/vue": "^2.0.18"
     }
 }
