@@ -1,30 +1,32 @@
 <template>
-    <div class="px-4 sm:px-6 lg:px-8 bg-white shadow-xl border-4 m-8 p-4">
+    <div class="px-4 sm:px-6 lg:px-8 shadow-xl border-4 m-8 p-4 ">
         <div class="sm:flex sm:items-center bg-yellow-400 p-8 px-8 w-full rounded-2xl shadow-xl">
             <div class="sm:flex-auto ">
                 <h1 class="text-base font-semibold leading-6 text-gray-900">Users</h1>
                 <p class="mt-2 text-sm text-gray-700">create a user.</p>
             </div>
             <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-                <a href="index"
-                    class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">list
-                    of user</a>
+                <a href="index" class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                    list of users
+                </a>
             </div>
         </div>
 
-        <div class="w-full flex justify-center mt-8">
-            <div class="w-50">
+        <div class="w-full flex justify-center mt-8 ">
+            <div class="w-50 p-4 bg-white rounded-2xl border-2 shadow-xl
+            ">
                 <form @submit.prevent="submit" enctype="multipart/form-data">
                     <div class="space-y-12">
                         <div class="border-b border-gray-900/10 pb-12">
                             <h2 class="text-base font-semibold leading-7 text-gray-900">Profile</h2>
                             <p class="mt-1 text-sm leading-6 text-gray-600">
-                                This informations will be store safely.</p>
+                                These informations will be store safely.</p>
 
                             <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                                 <div class="sm:col-span-3">
-                                    <label for="firstname" class="block text-sm font-medium leading-6 text-gray-900">firstname
-                                        *</label>-
+                                    <label for="firstname" class="block text-sm font-medium leading-6 text-gray-900">
+                                        firstname*
+                                    </label>
                                     <div class="mt-2">
                                         <div
                                             class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
