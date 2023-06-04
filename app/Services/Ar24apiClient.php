@@ -13,7 +13,6 @@ class Ar24apiClient
     private string $prefixCache = "ar24_api";
     private string $date;
     private string $signature;
-    private  File $file;
 
     public function __construct()
     {
