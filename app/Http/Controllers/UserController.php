@@ -8,6 +8,7 @@ use Inertia\Response;
 use Illuminate\Http\Request;
 use App\Services\Ar24apiClient;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreUserRequest;
 
 class UserController extends Controller
@@ -70,9 +71,10 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      * 
-     * @return JsonResponse
+     * @param StoreUserRequest $request
+     * @return RedirectResponse
      */
-    public function store(StoreUserRequest $request): JsonResponse
+    public function store(StoreUserRequest $request): RedirectResponse|string
     {
 
         $request->validated();
@@ -111,9 +113,7 @@ class UserController extends Controller
             $response = json_decode($decryptedResponse, true);
     
             if( is_string($r) && is_array(json_decode($r, true)) && json_decode($r, true)['status'] === 'ERROR'){
-                return response()->json([
-                    'message' => json_decode($r, true)['message']
-                ]);
+                return $this->redirectWithFlashMessage('user.index',json_decode($r, true)['message'], 'danger' );
             }
 
             return $this->returnResponse($response);   
@@ -123,31 +123,37 @@ class UserController extends Controller
         }
     }
 
-    /**
+     /**
      * returning the response
      *
      * @param array $response
-     * @return JsonResponse|string
+     * @return RedirectResponse|string
      */
-    private function returnResponse(array $response): JsonResponse|string
+    private function returnResponse(array $response): RedirectResponse|string
     {
-
         return match ($response['status']) {
-            'SUCCESS' =>  response()->json([
-                'status' => 'success',
-                'message' => $response['message'],
-            ]),
-            'ERROR' =>  response()->json([
-                'status' => 'error',
-                'message' => $response['message'],
-            ]),
-            default =>  response()->json([
-                'status' => 'unkown..',
-                'message' => 'Something went wrong...',
-            ]),
-        };      
+            'SUCCESS' => $this->redirectWithFlashMessage('user.index', 'The file has been sent !'),
+            'ERROR' =>  $this->redirectWithFlashMessage('user.index',  'something went wrong in the upload.', 'danger'),
+            default =>  $this->redirectWithFlashMessage('user.index',  'something went wrong ...', 'danger'),
+        };     
 
     }
+
+     /**
+     * Redirect to route with a flash message
+     *
+     * @param string $route
+     * @param string $message
+     * @param string $type
+     * @return RedirectResponse
+     */
+    private function redirectWithFlashMessage(string $route, string $message, ?string $type = "success"): RedirectResponse
+    {
+        session()->flash('flash.banner', $message);
+        session()->flash('flash.bannerStyle', $type);         
+        return \to_route($route);
+    }
+
 
     /**
      * Display the specified resource.

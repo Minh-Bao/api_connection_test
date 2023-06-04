@@ -6,6 +6,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Services\Ar24apiClient;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Validation\Rules\File;
 use Illuminate\Support\Facades\Validator;
 
@@ -28,13 +29,11 @@ class AttachmentController extends Controller
      /**
      * Upload file img to the designated folder
      *
-     * @return JsonResponse|string
+     * @return RedirectResponse|JsonResponse|string
      */
-    public function uploadAttachment(Request $request, ): JsonResponse|string
+    public function uploadAttachment(Request $request, ): RedirectResponse|JsonResponse|string
     {
-        if(empty($request->attachment)) return response()->json([
-            'message' => 'You must choose a file before upload',
-        ]);
+        if(empty($request->attachment)) return $this->redirectWithFlashMessage('user.index','You must choose a file before upload !!!!', 'danger');
 
         $file = $request->attachment;
         $file_name = Str::before($file->getClientOriginalName(), '.'.$file->extension());
@@ -43,7 +42,7 @@ class AttachmentController extends Controller
          * Validation file
          */
         if($file->isValid()){
-            Validator::validate($request->all(), [
+            $validation = Validator::validate($request->all(), [
                 'attachment' => ['required', File::document()->between(1,256000 )],
             ]);
         }
@@ -60,9 +59,7 @@ class AttachmentController extends Controller
             ])->body();
 
             if( is_string($r) && \is_array(json_decode($r, true)) && json_decode($r, true)['status'] === 'ERROR'){
-                return response()->json([
-                    'message' => json_decode($r, true)['message']
-                ]);
+                return $this->redirectWithFlashMessage('user.index',json_decode($r, true)['message'], 'danger' );
             }
 
             $decryptedResponse = $this->client->decryptResponse($r);
@@ -79,23 +76,31 @@ class AttachmentController extends Controller
      * returning the response
      *
      * @param array $response
-     * @return JsonResponse|string
+     * @return RedirectResponse|string
      */
-    private function returnResponse(array $response): JsonResponse|string
+    private function returnResponse(array $response): RedirectResponse|string
     {
-
         return match ($response['status']) {
-            'SUCCESS' =>  response()->json([
-                'message' => 'The file has been sent !',
-            ]),
-            'ERROR' =>  response()->json([
-                'message' => ' something went wrong in the upload.',
-            ]),
-            default =>  response()->json([
-                'message' => 'Something went wrong...',
-            ]),
-        };      
+            'SUCCESS' => $this->redirectWithFlashMessage('user.index', 'The file has been sent !'),
+            'ERROR' =>  $this->redirectWithFlashMessage('user.index',  'something went wrong in the upload.', 'danger'),
+            default =>  $this->redirectWithFlashMessage('user.index',  'something went wrong ...', 'danger'),
+        };     
 
+    }
+
+    /**
+     * Redirect to route with a flash message
+     *
+     * @param string $route
+     * @param string $message
+     * @param string $type
+     * @return RedirectResponse
+     */
+    private function redirectWithFlashMessage(string $route, string $message, ?string $type = "success"): RedirectResponse
+    {
+        session()->flash('flash.banner', $message);
+        session()->flash('flash.bannerStyle', $type);         
+        return \to_route($route);
     }
 
     /**
