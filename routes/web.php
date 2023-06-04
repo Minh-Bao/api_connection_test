@@ -58,7 +58,7 @@ Route::prefix('users')->group(function () {
      /**
      * Mail
      */
-    Route::prefix('mail')->group(function() {
+    Route::prefix('{id}/mail')->group(function() {
         Route::get('send', [Mailcontroller::class, 'create'])->name('user.mail.send');
     });
 });
