@@ -32,6 +32,9 @@ class AttachmentController extends Controller
      */
     public function uploadAttachment(Request $request, ): JsonResponse|string
     {
+        if(empty($request->attachment)) return response()->json([
+            'message' => 'You must choose a file before upload',
+        ]);
 
         $file = $request->attachment;
         $file_name = Str::before($file->getClientOriginalName(), '.'.$file->extension());
