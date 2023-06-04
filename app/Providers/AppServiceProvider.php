@@ -2,9 +2,7 @@
 
 namespace App\Providers;
 
-use Inertia\Inertia;
 use Illuminate\Validation\Rules\File;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
