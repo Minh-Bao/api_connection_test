@@ -1,5 +1,6 @@
 <template>
     <div class="px-4 sm:px-6 lg:px-8 shadow-xl border-4 m-8 p-4 ">
+        <Banner :key="componentKey" />
         <div class="sm:flex sm:items-center bg-yellow-400 p-8 px-8 w-full rounded-2xl shadow-xl">
             <div class="sm:flex-auto ">
                 <h1 class="text-base font-semibold leading-6 text-gray-900">Users</h1>
@@ -381,6 +382,10 @@
   
 <script setup>
 import { useForm } from '@inertiajs/vue3';
+import Banner from '@/Components/Banner.vue';
+import { ref } from 'vue';
+
+const componentKey = ref(0);
 
 defineProps({
     errors: String
@@ -417,8 +422,8 @@ const form = useForm({
 function submit() {
     axios.post('/user/store', form)
         .then(
-            function (response) {
-                alert(JSON.stringify(response.data.message))
+            function () {
+                componentKey.value += 1;
             }
         ).catch(
             function (error) {

@@ -1,5 +1,6 @@
 <template>
     <div class="px-4 sm:px-6 lg:px-8 bg-white shadow-xl border-4 m-8 ">
+        <Banner :key="componentKey" />
         <div class="sm:flex sm:items-center bg-yellow-400 py-4 px-8 w-full rounded-b-2xl pb-8 shadow-xl ">
             <div class="sm:flex-auto">
                 <h1 class="text-base font-semibold leading-6 text-gray-900">Users</h1>
@@ -67,7 +68,11 @@
 </template>
   
 <script setup>
+import Banner from '@/Components/Banner.vue';
 import { Link, router, useForm } from '@inertiajs/vue3';
+import { ref } from 'vue';
+
+const componentKey = ref(0);
 
 const props = defineProps({
     users: Array
@@ -83,12 +88,11 @@ function submit(id) {
         .submit('post', '/users/attachment/upload', {
             forceFormData: true,
             preserveScroll: true,
-            onSuccess: (e) => {
-                alert('Your file has been sent')
-                form.reset()
+            onSuccess: () => {
+                componentKey.value += 1;
             },
             onError: () => {
-                alert('Something wen wrong')
+                componentKey.value += 1;
             }
         })
 }
