@@ -30,9 +30,9 @@ class Mailcontroller extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(int $id)
     {
-        return Inertia::render('Users/Mails/Send');
+        return Inertia::render('Users/Mails/Send', ['user_id' => $id]);
     }
 
     /**
