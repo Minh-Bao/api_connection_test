@@ -4,19 +4,17 @@ namespace App\Services;
 
 use Exception;
 use Throwable;
-use Illuminate\Http\File;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Client\PendingRequest;
 
 class Ar24apiClient
 {
     private string $prefixCache = "ar24_api";
-    private string $date;
-    private string $signature;
 
-    public function __construct()
+    public function __construct(private string $date = '', private string $signature = '')
     {
-        //
+        $date =  $this->date = now()->tz('Europe/Paris')->format('Y-m-d H:i:s');
+        $signature = $this->getSignature();
     }
 
     /**
@@ -58,7 +56,7 @@ class Ar24apiClient
      * @throws Throwable
      * @return string
      */
-    public function getClientSecret(): string
+    private function getClientSecret(): string
     {
         $baseUri = \config('api.ar24.secret');
         \throw_if(
@@ -74,34 +72,44 @@ class Ar24apiClient
      * Construct the pre request with headers
      *
      * @param string|null $type
-     * @param string $date
      * @return PendingRequest
      */
-    public  function buildRequest(string $date, ?string $type = 'formParam'): PendingRequest
+    public  function buildRequest(?string $type = 'formParam'): PendingRequest
     {
         if($type === 'multipart'){
-            return $this->multipartRequest($date);
+            return $this->multipartRequest();
         }
 
-        return $this->formRequest($date);
+        return $this->formRequest();
+    }
+
+    /**
+     * add datas to hte form parameters
+     *
+     * @param array $newFormData
+     * @return array
+     */
+    public function formData(array $newFormData = []): array
+    {
+        $formData = ['token' => $this->getClientSecret(), 'date' => $this->date ];
+
+        return array_merge($formData, $newFormData);
     }
 
     /**
      * build a pre-request as form
      *
-     * @param string $date
+
      * @return PendingRequest
      */
-    private function formRequest(string $date): PendingRequest
+    private function formRequest(): PendingRequest
     {
-        $this->date = $date;
-
         return 
         Http::maxRedirects(10)
         ->timeout(10)
         ->asForm()
         ->withHeaders([
-            'signature'     => $this->getSignature(),
+            'signature'     => $this->signature,
             'date'          => $this->date
         ])->baseUrl($this->getBaseUri());
     }
@@ -109,19 +117,16 @@ class Ar24apiClient
     /**
      * build a pre-request as multipart
      *
-     * @param string $date
      * @return PendingRequest
      */
-    private function multipartRequest(string $date): PendingRequest
+    private function multipartRequest(): PendingRequest
     {
-        $this->date = $date;
-
         return 
         Http::maxRedirects(10)
         ->timeout(10)
         ->asMultipart()
         ->withHeaders([
-            'signature'     => $this->getSignature(),
+            'signature'     => $this->signature,
             'date'          => $this->date
         ])->baseUrl($this->getBaseUri());
     }
