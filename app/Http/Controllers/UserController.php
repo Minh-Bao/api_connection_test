@@ -20,9 +20,9 @@ class UserController extends Controller
      * @param integer $user_id
      * @param string $date
      */
-    public function __construct(private Ar24apiClient $client, private int $user_id = 0,  private string $date = '')
+    public function __construct(private Ar24apiClient $client, private int $user_id = 0)
     {
-        $date =  $this->date = now()->tz('Europe/Paris')->format('Y-m-d H:i:s');
+        //
     }
 
     /**
@@ -32,11 +32,9 @@ class UserController extends Controller
      */
     public function index(): Response|string
     {
+
        try{
-            $r = $this->client->buildRequest($this->date)->get('user/list', [
-                'token' => $this->client->getClientSecret(),
-                'date'  => $this->date,
-            ])->body();
+            $r = $this->client->buildRequest()->get('user/list', $this->client->formData())->body();
 
             $decryptedResponse = $this->client->decryptResponse($r);
 
@@ -77,35 +75,37 @@ class UserController extends Controller
     {
         $request->validated();
 
+        $formData =  $this->client->formData($request->validated);
+
+        /* [
+            'firstname' => $request->firstname ,
+            'lastname' => $request->lastname ,
+            'email' => $request->email ,
+            'address1' => $request->address1 ,
+            'address2' => $request->address2 ,
+            'statut' => $request->statut ,
+            'company' => $request->company ,
+            'city' => $request->city ,
+            'zipcode' => $request->zipcode ,
+            'gender' => $request->gender ,
+            'country'  => $request->country, 
+            'password' => $request->password ,
+            'company_siret' => $request->company_siret ,
+            'company_tva' => $request->company_tva ,
+            'confirmed' =>$request->confirmed ,
+            'billing_email' => $request->billing_email ,
+            'notify_ev' =>$request->notify_ev ,
+            'notify_ar' => $request->notify_ar ,
+            'notify_ng' =>$request->notify_ng ,
+            'notify_consent' =>$request->notify_consent ,
+            'notify_eidas_to_valid' =>$request->notify_eidas_to_valid ,
+            'notify_recipient_update' =>$request->notify_recipient_update ,
+            'notify_waiting_ar_answer' =>$request->notify_waiting_ar_answer ,
+            'is_legal_entity' =>$request->is_legal_entity ,
+        ] */
+
         try{
-            $r = $this->client->buildRequest($this->date)->post('user', [
-                'token' => $this->client->getClientSecret(),
-                'date'  => $this->date,
-                'firstname' => $request->firstname ,
-                'lastname' => $request->lastname ,
-                'email' => $request->email ,
-                'address1' => $request->address1 ,
-                'address2' => $request->address2 ,
-                'statut' => $request->statut ,
-                'company' => $request->company ,
-                'city' => $request->city ,
-                'zipcode' => $request->zipcode ,
-                'gender' => $request->gender ,
-                'country'  => $request->country, 
-                'password' => $request->password ,
-                'company_siret' => $request->company_siret ,
-                'company_tva' => $request->company_tva ,
-                'confirmed' =>$request->confirmed ,
-                'billing_email' => $request->billing_email ,
-                'notify_ev' =>$request->notify_ev ,
-                'notify_ar' => $request->notify_ar ,
-                'notify_ng' =>$request->notify_ng ,
-                'notify_consent' =>$request->notify_consent ,
-                'notify_eidas_to_valid' =>$request->notify_eidas_to_valid ,
-                'notify_recipient_update' =>$request->notify_recipient_update ,
-                'notify_waiting_ar_answer' =>$request->notify_waiting_ar_answer ,
-                'is_legal_entity' =>$request->is_legal_entity ,
-            ])->body();
+            $r = $this->client->buildRequest($this->validated())->post('user',  $formData )->body();
             
             $decryptedResponse = $this->client->decryptResponse($r);
             $response = json_decode($decryptedResponse, true);
@@ -162,11 +162,7 @@ class UserController extends Controller
     public function show(int $id): Response|string
     {
         try{
-            $r = $this->client->buildRequest($this->date)->get('user', [
-                'token' => $this->client->getClientSecret(),
-                'date'  => $this->date,
-                'id_user' => $id,
-            ])->body();
+            $r = $this->client->buildRequest()->get('user', $this->client->formData(['id_user' => $id]))->body();
 
             $decryptedResponse = $this->client->decryptResponse($r);
 

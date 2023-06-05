@@ -17,9 +17,9 @@ class Mailcontroller extends Controller
      * @param Ar24apiClient $client
      * @param string $date
      */
-    public function __construct(private Ar24apiClient $client, private string $date = '')
+    public function __construct(private Ar24apiClient $client)
     {
-        $date =  $this->date = now()->tz('Europe/Paris')->format('Y-m-d H:i:s');
+        //
     }
 
     
@@ -47,21 +47,10 @@ class Mailcontroller extends Controller
     {
         $request->validated();
 
+        $formData = $this->client->formData($request->validated());
+
         try{
-            $r = $this->client->buildRequest($this->date)->post('user', [
-                'token' => $this->client->getClientSecret(),
-                'date'  => $this->date,
-                'eidas' => 0,
-                'custom_name_sender' => $request->custom_name_sender ,     
-                'to_lastname' => $request->to_lastname ,
-                'to_firstname' => $request->to_firstname ,
-                'to_company' => $request->address2 ,
-                'to_email' => $request->statut ,
-                'dest_statut' => $request->company ,
-                'content' => $request->city ,
-                'ref_dossier' => $request->zipcode ,
-                'attachment' => $request->gender ,
-            ])->body();
+            $r = $this->client->buildRequest('multipart')->post('user', $formData)->body();
             
             $decryptedResponse = $this->client->decryptResponse($r);
             $response = json_decode($decryptedResponse, true);
@@ -86,8 +75,8 @@ class Mailcontroller extends Controller
     private function returnResponse(array $response): RedirectResponse|string
     {
         return match ($response['status']) {
-            'SUCCESS' => $this->redirectWithFlashMessage('user.mail.send', 'The file has been sent !'),
-            'ERROR' =>  $this->redirectWithFlashMessage('user.mail.send',  'something went wrong in the upload.', 'danger'),
+            'SUCCESS' => $this->redirectWithFlashMessage('user.mail.send', $response['message']),
+            'ERROR' =>  $this->redirectWithFlashMessage('user.mail.send',  $response['message'], 'danger'),
             default =>  $this->redirectWithFlashMessage('user.mail.send',  'something went wrong ...', 'danger'),
         };     
 

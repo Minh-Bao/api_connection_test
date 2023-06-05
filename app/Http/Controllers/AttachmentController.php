@@ -20,9 +20,9 @@ class AttachmentController extends Controller
      * @param integer $user_id
      * @param string $date
      */
-    public function __construct(private Ar24apiClient $client, private int $user_id = 0,  private string $date = '')
+    public function __construct(private Ar24apiClient $client, private int $user_id = 0)
     {
-        $date =  $this->date = now()->tz('Europe/Paris')->format('Y-m-d H:i:s');
+        //
     }
 
 
@@ -46,17 +46,14 @@ class AttachmentController extends Controller
                 'attachment' => ['required', File::document()->between(1,256000 )],
             ]);
         }
+
+        $formData = $this->client->formData([ 'file_name' => $file_name, 'id_user' => $request->user_id,]);
        
         try{
             $r = 
-            $this->client->buildRequest($this->date, 'multipart')
+            $this->client->buildRequest('multipart')
             ->attach('file', \file_get_contents($file), $file->getClientOriginalName() )
-            ->post('attachment/', [
-                'token' => $this->client->getClientSecret(),
-                'date'  => $this->date,
-                'file_name' => $file_name,
-                'id_user' => $request->user_id,
-            ])->body();
+            ->post('attachment/',$formData)->body();
 
             if( is_string($r) && \is_array(json_decode($r, true)) && json_decode($r, true)['status'] === 'ERROR'){
                 return $this->redirectWithFlashMessage('user.index',json_decode($r, true)['message'], 'danger' );
