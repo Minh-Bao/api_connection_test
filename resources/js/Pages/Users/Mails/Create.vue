@@ -161,11 +161,10 @@
 </template>
   
 <script setup>
-import { Head, Link, useForm, router } from '@inertiajs/vue3';
+import { Link, useForm } from '@inertiajs/vue3';
 import Banner from '@/Components/Banner.vue';
 import { ref } from 'vue';
 import Multiselect from '@suadelabs/vue3-multiselect'
-import axios from 'axios';
 
 const componentKey = ref(0);
 
