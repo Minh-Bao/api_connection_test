@@ -20,7 +20,7 @@ class AttachmentController extends Controller
      * @param integer $user_id
      * @param string $date
      */
-    public function __construct(private Ar24apiClient $client, private int $user_id = 0)
+    public function __construct(private Ar24apiClient $client)
     {
         //
     }
@@ -62,25 +62,26 @@ class AttachmentController extends Controller
             $decrypted_response = $this->client->decryptResponse($r);
             $response = json_decode($decrypted_response, true);
             
-            return $this->returnResponse($response);
+            return $this->returnResponse($response, 'user.index');
 
         }catch(Exception $e){
             return $e->getMessage();
         }
     }
 
-     /**
+    /**
      * returning the response
      *
      * @param array $response
+     * @param string $route
      * @return RedirectResponse|string
      */
-    private function returnResponse(array $response): RedirectResponse|string
+    private function returnResponse(array $response, string $route): RedirectResponse|string
     {
         return match ($response['status']) {
-            'SUCCESS' => $this->redirectWithFlashMessage('user.index', 'The file has been sent !'),
-            'ERROR' =>  $this->redirectWithFlashMessage('user.index',  'something went wrong in the upload.', 'danger'),
-            default =>  $this->redirectWithFlashMessage('user.index',  'something went wrong ...', 'danger'),
+            'SUCCESS' => $this->redirectWithFlashMessage($route, 'The file has been sent !'),
+            'ERROR' =>  $this->redirectWithFlashMessage($route,  'something went wrong in the upload.', 'danger'),
+            default =>  $this->redirectWithFlashMessage($route,  'something went wrong ...', 'danger'),
         };     
 
     }

@@ -20,7 +20,7 @@ class UserController extends Controller
      * @param integer $user_id
      * @param string $date
      */
-    public function __construct(private Ar24apiClient $client, private int $user_id = 0)
+    public function __construct(private Ar24apiClient $client)
     {
         //
     }
@@ -87,7 +87,7 @@ class UserController extends Controller
                 return $this->redirectWithFlashMessage('user.create',json_decode($r, true)['message'], 'danger' );
             }
 
-            return $this->returnResponse($response);   
+            return $this->returnResponse($response, 'user.create');   
 
         }catch(Exception $e){
             return $e->getMessage();
@@ -97,15 +97,16 @@ class UserController extends Controller
      /**
      * returning the response
      *
+     * @param string $route
      * @param array $response
      * @return RedirectResponse|string
      */
-    private function returnResponse(array $response): RedirectResponse|string
+    private function returnResponse(array $response, string $route): RedirectResponse|string
     {
         return match ($response['status']) {
-            'SUCCESS' => $this->redirectWithFlashMessage('user.create', 'The user has been created!'),
-            'ERROR' =>  $this->redirectWithFlashMessage('user.create',  $response['message'], 'danger'),
-            default =>  $this->redirectWithFlashMessage('user.create',  'something went wrong ...', 'danger'),
+            'SUCCESS' => $this->redirectWithFlashMessage($route, 'The user has been created!'),
+            'ERROR' =>  $this->redirectWithFlashMessage($route,  $response['message'], 'danger'),
+            default =>  $this->redirectWithFlashMessage($route,  'something went wrong ...', 'danger'),
         };     
 
     }
