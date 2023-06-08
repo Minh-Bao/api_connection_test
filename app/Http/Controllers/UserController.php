@@ -36,9 +36,9 @@ class UserController extends Controller
        try{
             $r = $this->client->buildRequest()->get('user/list', $this->client->formData())->body();
 
-            $decryptedResponse = $this->client->decryptResponse($r);
+            $decrypted_response = $this->client->decryptResponse($r);
 
-            $response = json_decode($decryptedResponse, true);
+            $response = json_decode($decrypted_response, true);
             
             $users = [];
 
@@ -102,13 +102,15 @@ class UserController extends Controller
             'notify_recipient_update' =>$request->notify_recipient_update ,
             'notify_waiting_ar_answer' =>$request->notify_waiting_ar_answer ,
             'is_legal_entity' =>$request->is_legal_entity ,
-        ] */
+        ];
+
+        $form_data =  $this->client->formData($data);
 
         try{
-            $r = $this->client->buildRequest($this->validated())->post('user',  $formData )->body();
+            $r = $this->client->buildRequest()->post('user',  $form_data )->body();
             
-            $decryptedResponse = $this->client->decryptResponse($r);
-            $response = json_decode($decryptedResponse, true);
+            $decrypted_response = $this->client->decryptResponse($r);
+            $response = json_decode($decrypted_response, true);
     
             if( is_string($r) && is_array(json_decode($r, true)) && json_decode($r, true)['status'] === 'ERROR'){
                 return $this->redirectWithFlashMessage('users.store',json_decode($r, true)['message'], 'danger' );
