@@ -47,12 +47,7 @@ class StoreUserRequest extends FormRequest
             'address2' => 'nullable|string|max:60',
             'zipcode' => 'required|string|max:7',
             'city' => 'required|string|max:30',
-            'password' => Password::min(8)
-                                ->letters(1)
-                                ->symbols(1)
-                                ->numbers(1)
-                                ->symbols(1)
-                                ->uncompromised(3)->message('your password must have all the required character'),
+            'password' => 'required|string|min:4',
             'confirmed' => 'boolean|max:1',
             'billing_email' => 'nullable|email|max:30',
             'notify_ev' => 'boolean|max:1',
