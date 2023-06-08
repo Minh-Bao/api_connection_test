@@ -35,6 +35,9 @@
                                             class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                             placeholder="janesmith" />
                                     </div>
+                                    <div class="text-red-500" v-if="errors.custom_name_sender">
+                                        {{ errors.custom_name_sender }}
+                                    </div>
                                 </div>
                             </div>
                             <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
@@ -46,6 +49,9 @@
                                         <input v-model="form.to_lastname" type="text" name="to_lastname" id="to_lastname" autocomplete="to_lastname"
                                             class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                             placeholder="richard" />
+                                    </div>
+                                    <div class="text-red-500" v-if="errors.to_lastname">
+                                        {{ errors.to_lastname }}
                                     </div>
                                 </div>
                             </div>
@@ -59,6 +65,9 @@
                                             class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                             placeholder="james" />
                                     </div>
+                                    <div class="text-red-500" v-if="errors.to_firstname">
+                                        {{ errors.to_firstname }}
+                                    </div>
                                 </div>
                             </div>
                             <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
@@ -70,6 +79,9 @@
                                         <input v-model="form.to_company" type="text" name="to_company" id="to_company" autocomplete="to_company"
                                             class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                             placeholder="ABC.co" />
+                                    </div>
+                                    <div class="text-red-500" v-if="errors.to_company">
+                                        {{ errors.to_company }}
                                     </div>
                                 </div>
                             </div>
@@ -83,6 +95,9 @@
                                             class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                             placeholder="dest@email.com" />
                                     </div>
+                                    <div class="text-red-500" v-if="errors.to_email">
+                                        {{ errors.to_email }}
+                                    </div>
                                 </div>
                             </div>
                             <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
@@ -95,6 +110,9 @@
                                         <option>professionnel</option>
                                     </select>
                                 </div>
+                                <div class="text-red-500" v-if="errors.dest_statut">
+                                    {{ errors.dest_statut }}
+                                </div>
                             </div>
 
 
@@ -105,6 +123,9 @@
                                     <textarea v-model="form.content" id="content" name="content" rows="3"
                                         class="block w-full max-w-2xl rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                                     <p class="mt-3 text-sm leading-6 text-gray-600">Write your mail content here.</p>
+                                </div>
+                                <div class="text-red-500" v-if="errors.content">
+                                    {{ errors.content }}
                                 </div>
                             </div>
 
@@ -121,6 +142,9 @@
                                         placeholder="Pick some files"
                                     >
                                     </multiselect>                               
+                                </div>
+                                <div class="text-red-500" v-if="errors.attachment">
+                                    {{ errors.attachment }}
                                 </div>
                             </div>
                         </div>
