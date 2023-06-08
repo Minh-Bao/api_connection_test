@@ -47,20 +47,20 @@ class AttachmentController extends Controller
             ]);
         }
 
-        $formData = $this->client->formData([ 'file_name' => $file_name, 'id_user' => $request->user_id,]);
+        $form_data = $this->client->formData([ 'file_name' => $file_name, 'id_user' => $request->user_id,]);
        
         try{
             $r = 
             $this->client->buildRequest('multipart')
             ->attach('file', \file_get_contents($file), $file->getClientOriginalName() )
-            ->post('attachment/',$formData)->body();
+            ->post('attachment/',$form_data)->body();
 
             if( is_string($r) && \is_array(json_decode($r, true)) && json_decode($r, true)['status'] === 'ERROR'){
                 return $this->redirectWithFlashMessage('user.index',json_decode($r, true)['message'], 'danger' );
             }
 
-            $decryptedResponse = $this->client->decryptResponse($r);
-            $response = json_decode($decryptedResponse, true);
+            $decrypted_response = $this->client->decryptResponse($r);
+            $response = json_decode($decrypted_response, true);
             
             return $this->returnResponse($response);
 
