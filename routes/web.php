@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\AttachmentController;
-use App\Http\Controllers\Mailcontroller;
-use App\Http\Controllers\UserController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
+use App\Http\Controllers\MailController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AttachmentController;
+use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,13 +53,17 @@ Route::prefix('users')->group(function () {
      * Attachment
      */
     Route::prefix('attachment')->group(function() {
-        Route::post('upload', [AttachmentController::class, 'uploadAttachment'])->name('user.attachment.upload');
+        Route::get('list/{user_id}', [AttachmentController::class, 'index']);
+        Route::post('upload', [AttachmentController::class, 'uploadAttachment'])
+        ->middleware([HandlePrecognitiveRequests::class])
+        ->name('user.attachment.upload');
     });
 
      /**
      * Mail
      */
     Route::prefix('{id}/mail')->group(function() {
-        Route::get('send', [Mailcontroller::class, 'create'])->name('user.mail.send');
+        Route::get('create', [MailController::class, 'create'])->name('user.mail.create');
+        Route::post('send', [MailController::class, 'send'])->name('user.mail.send');
     });
 });
