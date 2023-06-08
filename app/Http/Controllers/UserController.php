@@ -75,9 +75,7 @@ class UserController extends Controller
     {
         $request->validated();
 
-        $formData =  $this->client->formData($request->validated);
-
-        /* [
+        $data = [
             'firstname' => $request->firstname ,
             'lastname' => $request->lastname ,
             'email' => $request->email ,
