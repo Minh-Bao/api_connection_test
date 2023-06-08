@@ -20,6 +20,7 @@
     },
     "dependencies": {
         "@heroicons/vue": "^2.0.18",
+        "@suadelabs/vue3-multiselect": "^1.0.2",
         "laravel-precognition-vue-inertia": "^0.2.2"
     }
 }
