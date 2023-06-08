@@ -403,6 +403,7 @@ const form = useForm({
     city: null,
     zipcode: null,
     gender: null,
+    country: null,
     password: null,
     company_siret: null,
     company_tva: null,
