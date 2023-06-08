@@ -36,7 +36,7 @@
                                                 class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                                 placeholder="janesmith" />
                                         </div>
-                                        <div class="text-red-500" v-if="form.errors.firstname">{{ form.errors.firstname }}</div>
+                                        <div class="text-red-500" v-if="errors.firstname">{{ errors.firstname }}</div>
                                     </div>
                                 </div>
                                 <div class="sm:col-span-3">
@@ -50,7 +50,7 @@
                                                 class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                                 placeholder="Albert" />
                                         </div>
-                                        <div class="text-red-500" v-if="errors.lastname">{{ form.errors.firstname }}</div>
+                                        <div class="text-red-500" v-if="errors.lastname">{{ errors.firstname }}</div>
                                     </div>
                                 </div>
                                 <div class="sm:col-span-8">
@@ -62,7 +62,7 @@
                                                 class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                                 placeholder="email" />
                                         </div>
-                                        <div class="text-red-500" v-if="errors.email">{{ form.errors.email }}</div>
+                                        <div class="text-red-500" v-if="errors.email">{{ errors.email }}</div>
                                     </div>
                                 </div>
                                 <div class="sm:col-span-3">
@@ -76,7 +76,7 @@
                                                 class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                                 placeholder="address1" />
                                         </div>
-                                        <div class="text-red-500" v-if="errors.address1">{{ form.errors.address1 }}</div>
+                                        <div class="text-red-500" v-if="errors.address1">{{ errors.address1 }}</div>
 
                                     </div>
                                 </div>
@@ -93,7 +93,7 @@
                                                 class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                                 placeholder="address2" />
                                         </div>
-                                        <div class="text-red-500" v-if="errors.address2">{{ form.errors.address2 }}</div>
+                                        <div class="text-red-500" v-if="errors.address2">{{ errors.address2 }}</div>
                                     </div>
                                 </div>
                                 <div class="sm:col-span-3">
@@ -107,7 +107,7 @@
                                                 class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                                 placeholder="statut" />
                                         </div>
-                                        <div class="text-red-500" v-if="errors.statut">{{ form.errors.statut }}</div>
+                                        <div class="text-red-500" v-if="errors.statut">{{ errors.statut }}</div>
                                     </div>
                                 </div>
                                 <div class="sm:col-span-3">
@@ -121,7 +121,7 @@
                                                 class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                                 placeholder="company" />
                                         </div>
-                                        <div class="text-red-500" v-if="errors.company">{{ form.errors.company }}</div>
+                                        <div class="text-red-500" v-if="errors.company">{{ errors.company }}</div>
                                     </div>
                                 </div>
                                 <div class="sm:col-span-3">
@@ -133,7 +133,7 @@
                                                 class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                                 placeholder="city" />
                                         </div>
-                                        <div class="text-red-500" v-if="errors.city">{{ form.errors.city }}</div>
+                                        <div class="text-red-500" v-if="errors.city">{{ errors.city }}</div>
                                     </div>
                                 </div>
                                 <div class="sm:col-span-3">
@@ -147,7 +147,7 @@
                                                 class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                                 placeholder="zipcode" />
                                         </div>
-                                        <div class="text-red-500" v-if="errors.zipcode">{{ form.errors.zipcode }}</div>
+                                        <div class="text-red-500" v-if="errors.zipcode">{{ errors.zipcode }}</div>
                                     </div>
                                 </div>
 
@@ -164,7 +164,7 @@
                                             <option value="N">No gender</option>
                                         </select>
                                     </div>
-                                    <div class="text-red-500" v-if="errors.gender">{{ form.errors.gender }}</div>
+                                    <div class="text-red-500" v-if="errors.gender">{{ errors.gender }}</div>
                                 </div>
 
                                 <div class="col-span-full">
@@ -180,7 +180,7 @@
                                             <option value="US">USA</option>
                                         </select>
                                     </div>
-                                    <div class="text-red-500" v-if="errors.country">{{ form.errors.country }}</div>
+                                    <div class="text-red-500" v-if="errors.country">{{ errors.country }}</div>
                                 </div>
 
                                 <div class="sm:col-span-3">
@@ -194,7 +194,7 @@
                                                 class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                                 placeholder="password" />
                                         </div>
-                                        <div class="text-red-500" v-if="errors.password">{{ form.errors.password }}</div>
+                                        <div class="text-red-500" v-if="errors.password">{{ errors.password }}</div>
                                     </div>
                                 </div>
                                 <div class="sm:col-span-3">
@@ -208,7 +208,7 @@
                                                 class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                                 placeholder="company_siret" />
                                         </div>
-                                        <div class="text-red-500" v-if="errors.company_siret">{{ form.errors.company_siret }}
+                                        <div class="text-red-500" v-if="errors.company_siret">{{ errors.company_siret }}
                                         </div>
                                     </div>
                                 </div>
@@ -223,7 +223,7 @@
                                                 class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                                 placeholder="company_tva" />
                                         </div>
-                                        <div class="text-red-500" v-if="errors.company_tva">{{ form.errors.company_tva }}</div>
+                                        <div class="text-red-500" v-if="errors.company_tva">{{ errors.company_tva }}</div>
                                     </div>
                                 </div>
                                 <div class="sm:col-span-3">
@@ -237,7 +237,7 @@
                                                 class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                                 placeholder="billing_email" />
                                         </div>
-                                        <div class="text-red-500" v-if="errors.billing_email">{{ form.errors.billing_email }}
+                                        <div class="text-red-500" v-if="errors.billing_email">{{ errors.billing_email }}
                                         </div>
                                     </div>
                                 </div>
@@ -263,7 +263,7 @@
                                                 <input v-model="form.confirmed" id="confirmed" name="confirmed" type="checkbox"
                                                     class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
                                             </div>
-                                            <div class="text-red-500" v-if="errors.confirmed">{{ form.errors.confirmed }}</div>
+                                            <div class="text-red-500" v-if="errors.confirmed">{{ errors.confirmed }}</div>
                                             <div class="text-sm leading-8">
                                                 <label for="confirmed" class="font-medium text-gray-900">confirmed</label>
                                             </div>
@@ -273,7 +273,7 @@
                                                 <input v-model="form.notify_ev" id="notify_ev" name="notify_ev" type="checkbox"
                                                     class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
                                             </div>
-                                            <div class="text-red-500" v-if="errors.notify_ev">{{ form.errors.notify_ev }}</div>
+                                            <div class="text-red-500" v-if="errors.notify_ev">{{ errors.notify_ev }}</div>
                                             <div class="text-sm leading-6">
                                                 <label for="notify_ev" class="font-medium text-gray-900">notify_ev</label>
                                             </div>
@@ -283,7 +283,7 @@
                                                 <input v-model="form.notify_ar" id="notify_ar" name="notify_ar" type="checkbox"
                                                     class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
                                             </div>
-                                            <div class="text-red-500" v-if="errors.notify_ar">{{ form.errors.notify_ar }}</div>
+                                            <div class="text-red-500" v-if="errors.notify_ar">{{ errors.notify_ar }}</div>
                                             <div class="text-sm leading-6">
                                                 <label for="notify_ar" class="font-medium text-gray-900">notify_ar</label>
                                             </div>
@@ -293,7 +293,7 @@
                                                 <input v-model="notify_ng" id="notify_ar" name="notify_ng" type="checkbox"
                                                     class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
                                             </div>
-                                            <div class="text-red-500" v-if="errors.notify_ng">{{ form.errors.notify_ng }}</div>
+                                            <div class="text-red-500" v-if="errors.notify_ng">{{ errors.notify_ng }}</div>
                                             <div class="text-sm leading-6">
                                                 <label for="notify_ng" class="font-medium text-gray-900">notify_ng</label>
                                             </div>
@@ -305,7 +305,7 @@
                                                     class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
                                             </div>
                                             <div class="text-red-500" v-if="errors.notify_consent">
-                                                {{ form.errors.notify_consent }}</div>
+                                                {{ errors.notify_consent }}</div>
                                             <div class="text-sm leading-6">
                                                 <label for="notify_consent"
                                                     class="font-medium text-gray-900">notify_consent</label>
@@ -318,7 +318,7 @@
                                                     class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
                                             </div>
                                             <div class="text-red-500" v-if="errors.notify_eidas_to_valid">
-                                                {{ form.errors.notify_eidas_to_valid }}</div>
+                                                {{ errors.notify_eidas_to_valid }}</div>
                                             <div class="text-sm leading-6">
                                                 <label for="notify_eidas_to_valid"
                                                     class="font-medium text-gray-900">notify_eidas_to_valid</label>
@@ -331,7 +331,7 @@
                                                     class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
                                             </div>
                                             <div class="text-red-500" v-if="errors.notify_recipient_update">
-                                                {{ form.errors.notify_recipient_update }}</div>
+                                                {{ errors.notify_recipient_update }}</div>
                                             <div class="text-sm leading-6">
                                                 <label for="notify_recipient_update"
                                                     class="font-medium text-gray-900">notify_recipient_update</label>
@@ -344,7 +344,7 @@
                                                     class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
                                             </div>
                                             <div class="text-red-500" v-if="errors.notify_waiting_ar_answer">
-                                                {{ form.errors.notify_waiting_ar_answer }}</div>
+                                                {{ errors.notify_waiting_ar_answer }}</div>
                                             <div class="text-sm leading-6">
                                                 <label for="notify_waiting_ar_answer"
                                                     class="font-medium text-gray-900">notify_waiting_ar_answer</label>
@@ -357,7 +357,7 @@
                                                     class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
                                             </div>
                                             <div class="text-red-500" v-if="errors.is_legal_entity">
-                                                {{ form.errors.is_legal_entity }}</div>
+                                                {{ errors.is_legal_entity }}</div>
                                             <div class="text-sm leading-6">
                                                 <label for="is_legal_entity"
                                                     class="font-medium text-gray-900">is_legal_entity</label>
