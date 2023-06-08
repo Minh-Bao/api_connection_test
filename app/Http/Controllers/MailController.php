@@ -76,7 +76,6 @@ class MailController extends Controller
         $request->validated();
 
         $form_data = $this->client->formData($request->validated());
-
         $form_data['id_user'] = $id;
         $form_data['eidas'] = 0;
 
