@@ -421,16 +421,18 @@ const form = useForm({
 
 
 function submit() {
-    axios.post('/user/store', form)
-        .then(
-            function () {
+
+    form.submit('post', '/users/store', {
+            forceFormData: true,
+            preserveScroll: true,
+            onSuccess: (e) => {
+                componentKey.value += 1;
+                form.reset();
+            },
+            onError: () => {
                 componentKey.value += 1;
             }
-        ).catch(
-            function (error) {
-                alert(JSON.stringify(response.data.message))
-            }
-        )
+        })
 }
 
 </script>
