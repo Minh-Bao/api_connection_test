@@ -111,7 +111,7 @@ class UserController extends Controller
             $response = json_decode($decrypted_response, true);
     
             if( is_string($r) && is_array(json_decode($r, true)) && json_decode($r, true)['status'] === 'ERROR'){
-                return $this->redirectWithFlashMessage('users.store',json_decode($r, true)['message'], 'danger' );
+                return $this->redirectWithFlashMessage('user.create',json_decode($r, true)['message'], 'danger' );
             }
 
             return $this->returnResponse($response);   
@@ -130,9 +130,9 @@ class UserController extends Controller
     private function returnResponse(array $response): RedirectResponse|string
     {
         return match ($response['status']) {
-            'SUCCESS' => $this->redirectWithFlashMessage('users.store', 'The file has been sent !'),
-            'ERROR' =>  $this->redirectWithFlashMessage('users.store',  'something went wrong in the upload.', 'danger'),
-            default =>  $this->redirectWithFlashMessage('users.store',  'something went wrong ...', 'danger'),
+            'SUCCESS' => $this->redirectWithFlashMessage('user.create', 'The user has been created!'),
+            'ERROR' =>  $this->redirectWithFlashMessage('user.create',  $response['message'], 'danger'),
+            default =>  $this->redirectWithFlashMessage('user.create',  'something went wrong ...', 'danger'),
         };     
 
     }
