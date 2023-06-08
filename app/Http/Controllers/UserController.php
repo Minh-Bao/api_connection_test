@@ -75,34 +75,7 @@ class UserController extends Controller
     {
         $request->validated();
 
-        $data = [
-            'firstname' => $request->firstname ,
-            'lastname' => $request->lastname ,
-            'email' => $request->email ,
-            'address1' => $request->address1 ,
-            'address2' => $request->address2 ,
-            'statut' => $request->statut ,
-            'company' => $request->company ,
-            'city' => $request->city ,
-            'zipcode' => $request->zipcode ,
-            'gender' => $request->gender ,
-            'country'  => $request->country, 
-            'password' => $request->password ,
-            'company_siret' => $request->company_siret ,
-            'company_tva' => $request->company_tva ,
-            'confirmed' =>$request->confirmed ,
-            'billing_email' => $request->billing_email ,
-            'notify_ev' =>$request->notify_ev ,
-            'notify_ar' => $request->notify_ar ,
-            'notify_ng' =>$request->notify_ng ,
-            'notify_consent' =>$request->notify_consent ,
-            'notify_eidas_to_valid' =>$request->notify_eidas_to_valid ,
-            'notify_recipient_update' =>$request->notify_recipient_update ,
-            'notify_waiting_ar_answer' =>$request->notify_waiting_ar_answer ,
-            'is_legal_entity' =>$request->is_legal_entity ,
-        ];
-
-        $form_data =  $this->client->formData($data);
+        $form_data =  $this->client->formData($request->validated());
 
         try{
             $r = $this->client->buildRequest()->post('user',  $form_data )->body();
