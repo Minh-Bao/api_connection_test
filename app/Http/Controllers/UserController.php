@@ -164,9 +164,9 @@ class UserController extends Controller
         try{
             $r = $this->client->buildRequest()->get('user', $this->client->formData(['id_user' => $id]))->body();
 
-            $decryptedResponse = $this->client->decryptResponse($r);
+            $decrypted_response = $this->client->decryptResponse($r);
 
-            $response = json_decode($decryptedResponse, true);
+            $response = json_decode($decrypted_response, true);
    
             return Inertia::render('Users/Show', ['user' => $response['result']]);
 
